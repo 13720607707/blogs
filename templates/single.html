@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load comments_extras %}
+
+
+
+
+            {% block main %}
+
+                <article class="post post-{{ TEXT.pk }}">
+                    <header class="entry-header">
+                        <h1 class="entry-title">{{  TEXT.title }}</h1>
+                        <div class="entry-meta">
+                            <span class="post-category"><a href="#">{{ TEXT.category.name }}</a></span>
+                            <span class="post-date"><a href="#"><time class="entry-date"
+                                                                      datetime="2012-11-09T23:15:57+00:00">{{ TEXT.created_t }}</time></a></span>
+                            <span class="post-author"><a href="#">作者：{{ TEXT.auther }}</a></span>
+                            <span class="comments-link"><a href="#comment-area">{{ TEXT.comment_set.count }}</a></span>
+                            <span class="views-count"><a href="#">阅读量：{{ TEXT.views }}</a></span>
+                        </div>
+                    </header>
+                    <div class="entry-content clearfix">
+                       {{ TEXT.body|safe }}
+                    </div>
+                </article>
+                <section class="comment-area" id="comment-area">
+                    <hr>
+                    <h3>发表评论</h3>
+                    {% show_comment_form  TEXT %}
+
+                    <div class="comment-list-panel">
+                      {% show_comments TEXT%}
+                    </div>
+                </section>
+
+            {% endblock %}
+            {% block toc %}
+                {% if TEXT.toc %}
+
+
+                <div class="widget widget-content">
+                    <h3 class="widget-title">文章目录</h3>
+                   {{ TEXT.toc|safe }}
+                {% endif %}
+        {% endblock toc%}

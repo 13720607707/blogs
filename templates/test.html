@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+test
+ {% for post in post_list %}
+        <article class="post post-1">
+            <header class="entry-header">
+                <h1 class="entry-title">
+                    <a href="/texts/{{ post.pk }}">{{ post.title }}</a>
+                </h1>
+                <div class="entry-meta">
+                    <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+                    <span class="post-date"><a href="#"><time class="entry-date"
+                                                              datetime="2012-11-09T23:15:57+00:00">{{ post.created_t }}</time></a></span>
+                    <span class="post-author"><a href="#">{{ post.auther }}</a></span>
+                    <span class="comments-link"><a
+                            href="/texts/{{ post.pk }}/#comment-area">{{ post.comment_set.count }}评论</a></span>
+                    <span class="views-count"><a href="#">阅读量：{{ post.views }}</a></span>
+                </div>
+            </header>
+            <div class="entry-content clearfix">
+                <p>{{ post.excerpt }}...</p>
+                <div class="read-more cl-effect-14">
+                    <a href="/texts/{{ post.pk }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                </div>
+            </div>
+        </article>
+{% endfor %}
+</body>
+</html>
