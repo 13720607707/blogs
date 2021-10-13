@@ -20,8 +20,8 @@ from comments.views import comment
 app_name = 'app01'
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'index/',views.index,name='index'),
-
+    path('',views.index,name='index'),
+    # path('',views.index),
     path(r'texts/<int:pk>/',views.details,name='detail'),
     path(r'archives/<int:year>/<int:month>/',views.archive,name='archive'),
     path(r'cate/<int:pk>/',views.category,name='cate'),
