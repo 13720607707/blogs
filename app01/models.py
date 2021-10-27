@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -7,6 +9,9 @@ from django.contrib.auth.models import User
 
 from django.utils.html import strip_tags
 #分类表格
+from markdown.extensions.toc import TocExtension, slugify
+
+
 class Category(models.Model):
     name=models.CharField(max_length=32)
 
@@ -76,7 +81,10 @@ class Text(models.Model):
         # 先将 Markdown 文本渲染成 HTML 文本
         # strip_tags 去掉 HTML 文本的全部 HTML 标签
         # 从文本摘取前 54 个字符赋给 excerpt
-        self.excerpt = strip_tags(md.convert(self.body))[:54]
+        if self.excerpt is None:
+            self.excerpt = strip_tags(md.convert(self.body))[:54]
+        # else:
+        #     self.excerpt = self.excerpt
 
         super().save(*args, **kwargs)
 

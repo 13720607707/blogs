@@ -20,11 +20,15 @@ from comments.views import comment
 app_name = 'app01'
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index,name='index'),
+    path('index/',views.index,name='index'),
     # path('',views.index),
     path(r'texts/<int:pk>/',views.details,name='detail'),
     path(r'archives/<int:year>/<int:month>/',views.archive,name='archive'),
     path(r'cate/<int:pk>/',views.category,name='cate'),
     path(r'tags/<int:pk>/',views.tag,name='tag'),
-    path(r'comment/<int:pk>/',comment,name='comment')
+    path(r'comment/<int:pk>/',comment,name='comment'),
+    path('search/', views.search, name='search'),
+    path('myself/', views.myself, name='myself'),
+    path('', views.home, name='home'),
+
 ]

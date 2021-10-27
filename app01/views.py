@@ -1,4 +1,6 @@
-from django.shortcuts import render,get_object_or_404
+from django.contrib import messages
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404, redirect
 from app01 import models
 from .models import Text,Category
 import markdown
@@ -15,7 +17,7 @@ def index(request):
         page = request.GET.get('page', 1)
     except PageNotAnInteger:
         page = 1
-    p = Paginator(post_list,5,request=request)
+    p = Paginator(post_list,3,request=request)
 
     post_list = p.page(page)
 
@@ -169,3 +171,26 @@ def tag(request,pk):
 #     def get_queryset(self):
 #         t = get_object_or_404(models.Tags,pk=self.kwargs.get('pk'))
 #         return super().get_queryset().filter(tags=t)
+def search(request):
+    q = request.GET.get('q')
+
+    if not q:
+        error_msg = "输入不能为空"
+        messages.add_message(request, messages.ERROR, error_msg, extra_tags='danger')
+        return redirect('/')
+
+    post_list = Text.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
+    try:
+        page = request.GET.get('page', 1)
+    except PageNotAnInteger:
+        page = 1
+    p = Paginator(post_list,3,request=request)
+
+    post_list = p.page(page)
+
+    return render(request, 'index.html', {'post_list': post_list})
+
+def myself(request):
+    return render(request,'myself.html')
+def home(request):
+    return render(request,'homepage.html')
